@@ -11,8 +11,8 @@
       "type": "n8n-nodes-base.telegramTrigger",
       "typeVersion": 1.1,
       "position": [
-        -320,
-        20
+        -420,
+        40
       ],
       "id": "1d0f57ec-6b94-4628-8582-ce584def8079",
       "name": "start",
@@ -116,8 +116,7 @@
                     "rightValue": "/weather",
                     "operator": {
                       "type": "string",
-                      "operation": "exists",
-                      "singleValue": true
+                      "operation": "equals"
                     }
                   }
                 ],
@@ -125,6 +124,30 @@
               },
               "renameOutput": true,
               "outputKey": "Погода"
+            },
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 2
+                },
+                "conditions": [
+                  {
+                    "id": "2dd56c05-5956-49ef-ab2b-c2ab06327387",
+                    "leftValue": "={{ $json.message.text }}",
+                    "rightValue": "",
+                    "operator": {
+                      "type": "string",
+                      "operation": "contains"
+                    }
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "неизвестная команда"
             }
           ]
         },
@@ -133,8 +156,8 @@
       "type": "n8n-nodes-base.switch",
       "typeVersion": 3.2,
       "position": [
-        -20,
-        0
+        -60,
+        20
       ],
       "id": "23b6d8e5-3c56-4d1d-b06b-525ccfe5dd2c",
       "name": "command"
@@ -236,7 +259,7 @@
       "type": "n8n-nodes-base.telegram",
       "typeVersion": 1.2,
       "position": [
-        960,
+        1060,
         320
       ],
       "id": "e63c5ab5-7cf9-496c-880e-3f3d5245335c",
@@ -256,8 +279,8 @@
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
       "position": [
-        260,
-        320
+        200,
+        180
       ],
       "id": "137fd894-c71a-4ea1-9af0-1b1f07405a5b",
       "name": "pogoda code"
@@ -276,12 +299,12 @@
       "type": "n8n-nodes-base.httpRequest",
       "typeVersion": 4.2,
       "position": [
-        540,
+        760,
         320
       ],
       "id": "09042718-8e65-4f7f-9548-ea4900eb9f0e",
       "name": "OpenWeatherMap",
-      "alwaysOutputData": true
+      "alwaysOutputData": false
     },
     {
       "parameters": {
@@ -297,7 +320,7 @@
       "type": "n8n-nodes-base.httpRequest",
       "typeVersion": 4.2,
       "position": [
-        400,
+        560,
         320
       ],
       "id": "53f790d5-a2a8-4458-976c-b3fc12b7c68d",
@@ -311,11 +334,182 @@
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
       "position": [
-        760,
+        920,
         320
       ],
       "id": "6546d778-9b58-4ff1-a53d-b2e48e02a50b",
       "name": "Format"
+    },
+    {
+      "parameters": {
+        "operation": "appendOrUpdate",
+        "documentId": {
+          "__rl": true,
+          "value": "12K_jC9KwnYzYrm4pkzhqfuB6bcoHF2OAcLFAjUvxKHE",
+          "mode": "list",
+          "cachedResultName": "Test Bot",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/12K_jC9KwnYzYrm4pkzhqfuB6bcoHF2OAcLFAjUvxKHE/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": "gid=0",
+          "mode": "list",
+          "cachedResultName": "list",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/12K_jC9KwnYzYrm4pkzhqfuB6bcoHF2OAcLFAjUvxKHE/edit#gid=0"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "id": "={{ $json.message.from.id }}",
+            "username": "={{ $json.message.from.username }}",
+            "name": "={{ $json.message.from.first_name }} {{ $json.message.from.last_name }}"
+          },
+          "matchingColumns": [
+            "id"
+          ],
+          "schema": [
+            {
+              "id": "id",
+              "displayName": "id",
+              "required": false,
+              "defaultMatch": true,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "username",
+              "displayName": "username",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "name",
+              "displayName": "name",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "data",
+              "displayName": "data",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.5,
+      "position": [
+        -420,
+        260
+      ],
+      "id": "33fa3f60-585f-4d5f-aa22-bfc806253993",
+      "name": "user",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "qguZF164pSp65TUR",
+          "name": "МОЙ GOOGLE"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "chatId": "={{ $('command').item.json.message.from.id }}",
+        "text": "=🆘  *Неверный формат запроса.*\n\nВведите запрос в формате: /weather [НАЗВАНИЕ ГОРОДА]\n\nНапример:  /weather Москва",
+        "additionalFields": {
+          "appendAttribution": false,
+          "parse_mode": "Markdown"
+        }
+      },
+      "type": "n8n-nodes-base.telegram",
+      "typeVersion": 1.2,
+      "position": [
+        560,
+        480
+      ],
+      "id": "63140621-a7c8-45f9-8d1c-9bda0ee1c2c3",
+      "name": "error city",
+      "webhookId": "6a98c73d-63e3-4fb6-a0a2-b4dc20a30c50",
+      "credentials": {
+        "telegramApi": {
+          "id": "ir0tpUtqIQXCimaw",
+          "name": "TEST POGODA"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "044331b2-6fdc-4749-bbeb-9d12ca659d03",
+              "leftValue": "={{ $json.city }}",
+              "rightValue": " Город не указан!",
+              "operator": {
+                "type": "string",
+                "operation": "exists",
+                "singleValue": true
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        380,
+        380
+      ],
+      "id": "20c4ee69-a966-4bb0-88e0-cbe2497a69c5",
+      "name": "If"
+    },
+    {
+      "parameters": {
+        "chatId": "={{ $('command').item.json.message.from.id }}",
+        "text": "=❌ Команда не распознана.  \n📋 Доступные команды:  \n/start - Начать диалог  \n/help - Список команд  \n/time - Текущее время  \n/weather [город] - Узнать погоду",
+        "additionalFields": {
+          "appendAttribution": false,
+          "parse_mode": "Markdown"
+        }
+      },
+      "type": "n8n-nodes-base.telegram",
+      "typeVersion": 1.2,
+      "position": [
+        -60,
+        360
+      ],
+      "id": "b64f72f6-da24-4d9c-bcfc-b4c08ae600a8",
+      "name": "no com",
+      "webhookId": "6a98c73d-63e3-4fb6-a0a2-b4dc20a30c50",
+      "credentials": {
+        "telegramApi": {
+          "id": "ir0tpUtqIQXCimaw",
+          "name": "TEST POGODA"
+        }
+      }
     }
   ],
   "pinData": {},
@@ -323,6 +517,11 @@
     "start": {
       "main": [
         [
+          {
+            "node": "user",
+            "type": "main",
+            "index": 0
+          },
           {
             "node": "command",
             "type": "main",
@@ -360,6 +559,13 @@
             "type": "main",
             "index": 0
           }
+        ],
+        [
+          {
+            "node": "no com",
+            "type": "main",
+            "index": 0
+          }
         ]
       ]
     },
@@ -378,7 +584,7 @@
       "main": [
         [
           {
-            "node": "Mesto",
+            "node": "If",
             "type": "main",
             "index": 0
           }
@@ -393,7 +599,8 @@
             "type": "main",
             "index": 0
           }
-        ]
+        ],
+        []
       ]
     },
     "Mesto": {
@@ -404,7 +611,8 @@
             "type": "main",
             "index": 0
           }
-        ]
+        ],
+        []
       ]
     },
     "Format": {
@@ -417,13 +625,36 @@
           }
         ]
       ]
+    },
+    "user": {
+      "main": [
+        []
+      ]
+    },
+    "If": {
+      "main": [
+        [
+          {
+            "node": "Mesto",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "error city",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
     }
   },
   "active": true,
   "settings": {
     "executionOrder": "v1"
   },
-  "versionId": "998ac5c2-0682-4f7b-9e8b-f33b8801f16a",
+  "versionId": "5b19e253-05d9-40d4-82dd-9551c9af7299",
   "meta": {
     "templateCredsSetupCompleted": true,
     "instanceId": "b4285cdcefd07af59d153976ea06da952ddd24c77e3a61263babeb0405a411dd"
