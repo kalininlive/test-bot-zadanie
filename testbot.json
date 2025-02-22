@@ -116,7 +116,7 @@
                     "rightValue": "/weather",
                     "operator": {
                       "type": "string",
-                      "operation": "equals"
+                      "operation": "contains"
                     }
                   }
                 ],
@@ -279,8 +279,8 @@
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
       "position": [
-        200,
-        180
+        220,
+        380
       ],
       "id": "137fd894-c71a-4ea1-9af0-1b1f07405a5b",
       "name": "pogoda code"
@@ -299,7 +299,7 @@
       "type": "n8n-nodes-base.httpRequest",
       "typeVersion": 4.2,
       "position": [
-        760,
+        740,
         320
       ],
       "id": "09042718-8e65-4f7f-9548-ea4900eb9f0e",
@@ -334,7 +334,7 @@
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
       "position": [
-        920,
+        900,
         320
       ],
       "id": "6546d778-9b58-4ff1-a53d-b2e48e02a50b",
@@ -654,7 +654,7 @@
   "settings": {
     "executionOrder": "v1"
   },
-  "versionId": "5b19e253-05d9-40d4-82dd-9551c9af7299",
+  "versionId": "19c840d0-53f4-4457-bcc5-6917232ce88b",
   "meta": {
     "templateCredsSetupCompleted": true,
     "instanceId": "b4285cdcefd07af59d153976ea06da952ddd24c77e3a61263babeb0405a411dd"
